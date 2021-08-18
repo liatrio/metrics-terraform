@@ -1,0 +1,3 @@
+image: public.ecr.aws/j2s5d3z8/4-key-metrics
+tag: "1.2.2"
+imagePullPolicy: Always
