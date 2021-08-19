@@ -130,7 +130,7 @@ service:
   httpPortName: http
 
 ingress:
-  enabled: false
+  enabled: true
   annotations:
     {}
     # kubernetes.io/ingress.class: nginx

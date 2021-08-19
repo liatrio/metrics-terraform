@@ -4,6 +4,16 @@ resource "kubernetes_namespace" "toolchain_ns" {
   }
 }
 
+module "contour" {
+  source         = "../contour"
+  enabled        = var.contour_enabled
+  chart_values   = var.contour_values
+  chart_version  = var.contour_version
+  namespace      = kubernetes_namespace.toolchain_ns.metadata[0].name
+  chart_name     = var.contour_chart
+  repository     = var.contour_repository
+}
+
 module "elasticsearch" {
   source         = "../elasticsearch"
   enabled        = var.elasticsearch_enabled

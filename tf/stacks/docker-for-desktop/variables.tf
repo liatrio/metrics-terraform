@@ -1,3 +1,20 @@
+##### Contour Manager #########
+variable "contour_enabled" {
+  default = false
+}
+variable "contour_values" {
+}
+variable "contour_version" {
+  type = string
+}
+variable "contour_chart" {
+  type = string
+}
+variable "contour_repository" {
+  type = string
+}
+############################
+
 ##### Elasticsearch ########
 variable "elasticsearch_enabled" {
   default = false

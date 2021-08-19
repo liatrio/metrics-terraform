@@ -1,6 +1,12 @@
 module "toolchain" {
   source                   = "../../modules/toolchain/toolchain"
 
+  contour_enabled         = var.contour_enabled
+  contour_values          = var.contour_values
+  contour_version         = var.contour_version
+  contour_chart           = var.contour_chart
+  contour_repository      = var.contour_repository
+
   elasticsearch_enabled    = var.elasticsearch_enabled
   elasticsearch_values     = var.elasticsearch_values
   elasticsearch_version    = var.elasticsearch_version
