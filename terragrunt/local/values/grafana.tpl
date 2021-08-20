@@ -434,8 +434,8 @@ extraVolumeMounts: []
 
 ## Pass the plugins you want installed as a list.
 ##
-plugins: []
-  # - digrich-bubblechart-panel
+plugins:
+   - grafana-timestream-datasource
   # - grafana-clock-panel
 
 ## Configure grafana datasources
