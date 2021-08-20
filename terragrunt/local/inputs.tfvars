@@ -1,8 +1,9 @@
 ### Toolchain ########
 contour_enabled       = true
-elasticsearch_enabled = true
-kibana_enabled        = true
-logstash_enabled      = true
+elasticsearch_enabled = false
+grafana_enabled       = true
+kibana_enabled        = false
+logstash_enabled      = false
 metrik_enabled        = false
 ######################
 
@@ -15,6 +16,11 @@ elasticsearch_values     = "./values/elasticsearch.tpl"
 elasticsearch_version    = "7.14.0"
 elasticsearch_chart      = "elasticsearch"
 elasticsearch_repository = "elastic" # https://helm.elastic.co
+
+grafana_values           = "./values/grafana.tpl"
+grafana_version          = "6.16.0"
+grafana_chart            = "grafana"
+grafana_repository       = "grafana" # https://grafana.github.io/helm-charts
 
 kibana_values            = "./values/kibana.tpl"
 kibana_version           = "7.14.0"

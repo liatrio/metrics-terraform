@@ -41,6 +41,24 @@ variable "elasticsearch_repository" {
 }
 ############################
 
+##### Grafana ########
+variable "grafana_enabled" {
+  default = false
+}
+variable "grafana_values" {
+  default = false
+}
+variable "grafana_version" {
+  type = string
+}
+variable "grafana_chart" {
+  type = string
+}
+variable "grafana_repository" {
+  type = string
+}
+############################
+
 ##### Kibana ########
 variable "kibana_enabled" {
   default = false

@@ -24,6 +24,16 @@ module "elasticsearch" {
   repository     = var.elasticsearch_repository
 }
 
+module "grafana" {
+  source         = "../grafana"
+  enabled        = var.grafana_enabled
+  chart_values   = var.grafana_values
+  chart_version  = var.grafana_version
+  namespace      = kubernetes_namespace.toolchain_ns.metadata[0].name
+  chart_name     = var.grafana_chart
+  repository     = var.grafana_repository
+}
+
 module "kibana" {
   source         = "../kibana"
   enabled        = var.kibana_enabled

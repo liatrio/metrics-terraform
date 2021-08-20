@@ -13,6 +13,12 @@ module "toolchain" {
   elasticsearch_chart      = var.elasticsearch_chart
   elasticsearch_repository = var.elasticsearch_repository
 
+  grafana_enabled          = var.grafana_enabled
+  grafana_values           = var.grafana_values
+  grafana_version          = var.grafana_version
+  grafana_chart            = var.grafana_chart
+  grafana_repository       = var.grafana_repository
+
   kibana_enabled           = var.kibana_enabled
   kibana_values            = var.kibana_values
   kibana_version           = var.kibana_version
