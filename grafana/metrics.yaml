@@ -1,0 +1,894 @@
+apiVersion: v1
+data:
+  dashboard.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 35,
+      "iteration": 1630092815887,
+      "links": [],
+      "panels": [
+        {
+          "collapsed": false,
+          "datasource": "Timestream",
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 29,
+          "panels": [],
+          "title": "By Org",
+          "type": "row"
+        },
+        {
+          "datasource": "Timestream",
+          "gridPos": {
+            "h": 8,
+            "w": 10,
+            "x": 0,
+            "y": 1
+          },
+          "id": 45,
+          "options": {
+            "content": "# Deployment Frequency\n\nHow often an organization successfully releases to production           \n\n**Performance breakdown**\n\n* <span style=\"color:Red\">Low</span> - Between once per month and once every six months\n* <span style=\"color:Orange\">Medium</span> - Between once per week and once per month\n* <span style=\"color:LawnGreen\">High</span> - Between once per day and once per week",
+            "mode": "markdown"
+          },
+          "pluginVersion": "8.1.2",
+          "title": "Deployment Frequency",
+          "type": "text"
+        },
+        {
+          "cacheTimeout": null,
+          "datasource": "Timestream",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "displayName": "deploys per day",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 13,
+            "x": 10,
+            "y": 1
+          },
+          "id": 31,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.1.2",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d",
+                    "min_doc_count": 0,
+                    "trimEdges": 0
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "eventType:\"build\" AND teamName:$teamName AND appName:$appName",
+              "queryType": "raw",
+              "rawQuery": "WITH binned_query AS (\n  SELECT bin(time, 24h) AS bin_time, count(measure_value::varchar) as queries\n  FROM $__database.$__table\n  WHERE $__timeFilter\n  GROUP BY bin(time, 24h) order by bin_time\n)\n\nSELECT queries/7.0\nFROM binned_query",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Deployment Frequency",
+          "type": "stat"
+        },
+        {
+          "datasource": "Timestream",
+          "gridPos": {
+            "h": 8,
+            "w": 10,
+            "x": 0,
+            "y": 9
+          },
+          "id": 46,
+          "options": {
+            "content": "# Lead Time\n\nThe amount of time it takes a commit to get into production           \n\n**Performance breakdown**\n\n* <span style=\"color:Red\">Low</span> - Between one month and six months\n* <span style=\"color:Orange\">Medium</span> - Between one week and one month\n* <span style=\"color:LawnGreen\">High</span> - Between one day and one week",
+            "mode": "markdown"
+          },
+          "pluginVersion": "8.1.2",
+          "title": "Lead Time",
+          "type": "text"
+        },
+        {
+          "cacheTimeout": null,
+          "datasource": "Timestream",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "displayName": "days",
+              "mappings": [],
+              "max": 35,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 7
+                  },
+                  {
+                    "color": "red",
+                    "value": 30
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 13,
+            "x": 10,
+            "y": 9
+          },
+          "id": 49,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "text": {}
+          },
+          "pluginVersion": "8.1.2",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d",
+                    "min_doc_count": 0,
+                    "trimEdges": 0
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "eventType:\"build\" AND teamName:$teamName AND appName:$appName",
+              "queryType": "raw",
+              "rawQuery": "WITH binned_query AS (\n  SELECT bin(time, 24h) AS bin_time, count(measure_value::varchar)/2.0 as queries\n  FROM $__database.$__table\n  WHERE $__timeFilter\n  GROUP BY bin(time, 24h)\n)\n\nSELECT CREATE_TIME_SERIES(bin_time,queries)\nFROM binned_query",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Lead Time",
+          "type": "gauge"
+        },
+        {
+          "datasource": "Timestream",
+          "gridPos": {
+            "h": 8,
+            "w": 10,
+            "x": 0,
+            "y": 17
+          },
+          "id": 47,
+          "options": {
+            "content": "# Change Failure Rate\n\nThe percentage of deployments causing a failure in production           \n\n**Performance breakdown**\n\n* <span style=\"color:Red\">Low</span> - 46-60%\n* <span style=\"color:Orange\">Medium</span> - 0-15%\n* <span style=\"color:LawnGreen\">High</span> - 0-15%",
+            "mode": "markdown"
+          },
+          "pluginVersion": "8.1.2",
+          "title": "Change Failure Rate",
+          "type": "text"
+        },
+        {
+          "cacheTimeout": null,
+          "datasource": "Timestream",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 15
+                  },
+                  {
+                    "color": "red",
+                    "value": 45
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 13,
+            "x": 10,
+            "y": 17
+          },
+          "id": 50,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "text": {}
+          },
+          "pluginVersion": "8.1.2",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d",
+                    "min_doc_count": 0,
+                    "trimEdges": 0
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "eventType:\"build\" AND teamName:$teamName AND appName:$appName",
+              "queryType": "raw",
+              "rawQuery": "SELECT (query.fail_count/cast(query.total as double)) * 100\nFROM (\n    SELECT \n    (\n\tSELECT count(*)\n  \tFROM $__database.$__table\n  \tWHERE measure_value::varchar = 'failed'\n\t) AS fail_count,\n    (\n    SELECT count(*)\n\tFROM $__database.$__table\n    ) as total\n)query\n",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Change Failure Rate",
+          "type": "gauge"
+        },
+        {
+          "datasource": "Timestream",
+          "gridPos": {
+            "h": 8,
+            "w": 10,
+            "x": 0,
+            "y": 25
+          },
+          "id": 48,
+          "options": {
+            "content": "# Mean Time To Recovery\n\nHow long it takes an organization to recover from a failure in production           \n\n**Performance breakdown**\n\n* <span style=\"color:Red\">Low</span> - Between one week and one month\n* <span style=\"color:Orange\">Medium</span> - Less than one day\n* <span style=\"color:LawnGreen\">High</span> - less than one day",
+            "mode": "markdown"
+          },
+          "pluginVersion": "8.1.2",
+          "title": "MTTR",
+          "type": "text"
+        },
+        {
+          "cacheTimeout": null,
+          "datasource": "Timestream",
+          "description": "Mean time to recovery",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "displayName": "days",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 13,
+            "x": 10,
+            "y": 25
+          },
+          "id": 51,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.1.2",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d",
+                    "min_doc_count": 0,
+                    "trimEdges": 0
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "eventType:\"build\" AND teamName:$teamName AND appName:$appName",
+              "queryType": "raw",
+              "rawQuery": "SELECT query.last_success - query.last_fail\nFROM (\n    SELECT \n    (\n\tSELECT time\n  \tFROM $__database.$__table\n  \tWHERE measure_value::varchar = 'failed'\n    ORDER BY time DESC\n    LIMIT 1\n\t) AS last_fail,\n    (\n    SELECT time\n\tFROM $__database.$__table\n  \tWHERE measure_value::varchar = 'success'\n    ORDER BY time DESC\n    LIMIT 1\n    ) as last_success\n)query",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "MTTR",
+          "type": "stat"
+        },
+        {
+          "collapsed": false,
+          "datasource": "Timestream",
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 33
+          },
+          "id": 14,
+          "panels": [],
+          "title": "By Pipeline",
+          "type": "row"
+        },
+        {
+          "datasource": "Timestream",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 6,
+            "x": 0,
+            "y": 34
+          },
+          "id": 17,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "fake": true,
+                  "field": "appName",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": 1,
+                    "order": "desc",
+                    "orderBy": "_term",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                }
+              ],
+              "metrics": [
+                {
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "eventType:\"build\" AND teamName:$teamName AND appName:$appName",
+              "queryType": "raw",
+              "rawQuery": "WITH binned_query AS (\n  SELECT bin(time, 24h) AS bin_time, count(measure_value::varchar) as queries\n  FROM $__database.$__table\n  WHERE $__timeFilter\n  GROUP BY bin(time, 24h)\n)\n\nSELECT INTERPOLATE_FILL(CREATE_TIME_SERIES(bin_time,queries), SEQUENCE(min(bin_time), max(bin_time), 12h), 0) as Endpoint\nFROM binned_query\n",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Code Deploys By Pipeline",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "Timestream",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 6,
+            "x": 6,
+            "y": 34
+          },
+          "id": 39,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "title": "Code Commits By Pipeline",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "Timestream",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 6,
+            "x": 12,
+            "y": 34
+          },
+          "id": 41,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.1.2",
+          "targets": [
+            {
+              "queryType": "raw",
+              "rawQuery": "SELECT (query.fail_count/cast(query.total as double)) * 100\nFROM (\n    SELECT \n    (\n\tSELECT count(*)\n  \tFROM $__database.$__table\n  \tWHERE measure_value::varchar = 'failed'\n\t) AS fail_count,\n    (\n    SELECT count(*)\n\tFROM $__database.$__table\n    ) as total\n)query",
+              "refId": "A"
+            }
+          ],
+          "title": "Change Failure Rate",
+          "type": "stat"
+        },
+        {
+          "datasource": "Timestream",
+          "description": "Mean time to Recovery",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 6,
+            "x": 18,
+            "y": 34
+          },
+          "id": 43,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "title": "MTTR",
+          "type": "timeseries"
+        }
+      ],
+      "refresh": "",
+      "schemaVersion": 30,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "allValue": null,
+            "current": {
+              "selected": true,
+              "text": [
+                "All"
+              ],
+              "value": [
+                "$__all"
+              ]
+            },
+            "datasource": "Timestream",
+            "definition": "{\"find\": \"terms\", \"field\": \"teamName\"}",
+            "description": null,
+            "error": null,
+            "hide": 0,
+            "includeAll": true,
+            "label": "Team",
+            "multi": true,
+            "name": "teamName",
+            "options": [],
+            "query": "{\"find\": \"terms\", \"field\": \"teamName\"}",
+            "refresh": 2,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          },
+          {
+            "allValue": "",
+            "current": {
+              "selected": true,
+              "text": [
+                "All"
+              ],
+              "value": [
+                "$__all"
+              ]
+            },
+            "datasource": "Timestream",
+            "definition": "{\"find\": \"terms\", \"field\": \"appName\"}",
+            "description": null,
+            "error": null,
+            "hide": 0,
+            "includeAll": true,
+            "label": "Pipeline",
+            "multi": true,
+            "name": "appName",
+            "options": [],
+            "query": "{\"find\": \"terms\", \"field\": \"appName\"}",
+            "refresh": 2,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          }
+        ]
+      },
+      "time": {
+        "from": "now-7d",
+        "to": "now"
+      },
+      "timepicker": {
+        "refresh_intervals": [
+          "5s",
+          "10s",
+          "30s",
+          "1m",
+          "5m",
+          "15m",
+          "30m",
+          "1h",
+          "2h",
+          "1d"
+        ],
+        "time_options": [
+          "5m",
+          "15m",
+          "1h",
+          "6h",
+          "12h",
+          "24h",
+          "2d",
+          "7d",
+          "30d"
+        ]
+      },
+      "timezone": "",
+      "title": "Metrics Dashboard",
+      "uid": "ls4MmS47k",
+      "version": 15
+    }
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-metrics
+  labels:
+     grafana_dashboard: "1"

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-datasource-circleci-pipeline-metrics
+  labels:
+     grafana_datasource: "1"
+type: Opaque
+stringData:
+  timestream-pipeline-metrics.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: Timestream
+      type: "grafana-timestream-datasource"
+      jsonData:
+        authType: "keys"
+        accessKeyId: ""
+        secretAccessKey: ""
+        assumeRoleArn: ""
+        defaultRegion: ""
+        defaultDatabase: ""
+        defaultTable: ""
+        defaultMeasure: ""
+      secureJsonData:
+        accessKey: ""
+        secretKey: ""
