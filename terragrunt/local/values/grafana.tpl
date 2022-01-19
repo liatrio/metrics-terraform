@@ -321,7 +321,7 @@ initChownData:
 
 # Administrator credentials when not using an existing secret (see below)
 adminUser: admin
-# adminPassword: strongpassword
+adminPassword: strongpassword
 
 # Use an existing secret for the admin user.
 admin:
@@ -622,7 +622,7 @@ sidecar:
   # skipTlsVerify: true
   enableUniqueFilenames: false
   dashboards:
-    enabled: false
+    enabled: true
     SCProvider: true
     # label that the configmaps with dashboards are marked with
     label: grafana_dashboard
@@ -658,7 +658,7 @@ sidecar:
       # allow Grafana to replicate dashboard structure from filesystem
       foldersFromFilesStructure: false
   datasources:
-    enabled: false
+    enabled: true
     # label that the configmaps with datasources are marked with
     label: grafana_datasource
     # value of label that the configmaps with datasources are set to
